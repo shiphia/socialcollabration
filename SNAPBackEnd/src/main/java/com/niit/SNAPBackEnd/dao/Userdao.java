@@ -15,4 +15,5 @@ public interface Userdao {
 			public Users getUser(int userid);
 			public boolean checkLogin(Users user);
 			public Users getUserbyemail(String email);
+			public Users getUserbyId(int uderid);
 	}

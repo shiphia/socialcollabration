@@ -1,4 +1,4 @@
-package com.niit.SNAPBackeEnd;
+/*package com.niit.SNAPBackeEnd;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +31,7 @@ public static Userdao userDAO;
 	}
 	
 
-	@Ignore
+	
 	@Test
 	public void addUserTest()
 	{
@@ -53,3 +53,4 @@ public static Userdao userDAO;
 		
 	}
 }
+*/

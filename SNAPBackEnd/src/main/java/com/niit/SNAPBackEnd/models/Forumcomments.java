@@ -27,17 +27,27 @@ public class Forumcomments implements Serializable{
 	private int forumcomid;
 	 @Column(name = "ForumComm", nullable = false)
 		private String forumcomm;
-	 @ManyToOne
-	    @JoinColumn(name="F_id",updatable=true,insertable=true,nullable=false)
-	    private Forum forumm;
+	 @Column(name = "Forumid", nullable = false)
+	    private int forumid;
+	
 	 
 	 
 	 
-	public Forum getForumm() {
-		return forumm;
+	 @Column(name = "Username", nullable = false)
+	  private String username;
+	 
+	public String getUsername() {
+		return username;
 	}
-	public void setForumm(Forum forumm) {
-		this.forumm = forumm;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public int getForumid() {
+		return forumid;
+	}
+	public void setForumid(int forumid) {
+		this.forumid = forumid;
 	}
 	public int getForumcomid() {
 		return forumcomid;

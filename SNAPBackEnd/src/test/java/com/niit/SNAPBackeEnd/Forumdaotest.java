@@ -1,4 +1,4 @@
-package com.niit.SNAPBackeEnd;
+/*package com.niit.SNAPBackeEnd;
 
 import static org.junit.Assert.*;
 
@@ -55,4 +55,4 @@ public class Forumdaotest {
 	
 }
 
-	
+	*/

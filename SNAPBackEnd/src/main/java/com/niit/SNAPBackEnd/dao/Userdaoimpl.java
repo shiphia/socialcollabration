@@ -129,6 +129,24 @@ public class Userdaoimpl implements Userdao {
 			return false;
 		}
 	}
+	@Transactional
+	public Users getUserbyId(int uderid) {
+		Users user=new Users();
+		try{
+			Session session= sessionFactory.openSession();
+			Query query=session.createQuery("from Users where userid="+uderid);
+			 user=(Users)query.list().get(0);
+			session.close();
+			
+		}
+		catch(Exception e)
+		{
+			
+			
+		}
+		return user;
+		
+	}
 
 
 	

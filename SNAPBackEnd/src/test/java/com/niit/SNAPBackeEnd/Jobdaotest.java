@@ -1,4 +1,4 @@
-package com.niit.SNAPBackeEnd;
+/*package com.niit.SNAPBackeEnd;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -37,3 +37,4 @@ public class Jobdaotest {
 	}
 
 }
+*/

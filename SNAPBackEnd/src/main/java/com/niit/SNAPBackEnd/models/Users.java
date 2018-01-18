@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.Set;
 @Entity
 @Component
 @Table(name="USERS")
+@SequenceGenerator(name= "NAME_SEQUENCE", sequenceName = "SEQ_ID", initialValue=1, allocationSize = 1)
 public class Users implements Serializable{
 	/**
 	 * 
@@ -29,9 +31,11 @@ public class Users implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	 @Id
-	 
-	  
-	private int userid;
+	 @GeneratedValue
+	 @Column(name = "userid", nullable = false)
+	    private int userid;
+	 @Column(name = "Email", nullable = false)
+	    private String email;
 	
 	 @Column(name = "Firstname", nullable = false)
 	    private String firstname;
@@ -41,8 +45,7 @@ public class Users implements Serializable{
 	 
 	 
 	 
-	@Column(name = "Email", nullable = false)
-    private String email;
+	
 	
     @Column(name = "Password", nullable = false)
     private String password;
@@ -57,15 +60,7 @@ public class Users implements Serializable{
 
 
 
-	public int getUserid() {
-		return userid;
-	}
-
-
-
-	public void setUserid(int userid) {
-		this.userid = userid;
-	}
+	
 
 
 	public String getFirstname() {
@@ -140,6 +135,22 @@ public class Users implements Serializable{
 	public void setIsonline(String isonline) {
 		this.isonline = isonline;
 	}
+
+
+
+	public int getUserid() {
+		return userid;
+	}
+
+
+
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+
+
+
+	
 } 
     
     

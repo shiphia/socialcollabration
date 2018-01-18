@@ -1,4 +1,10 @@
+<style>
+body{
 
+background:url('https://alttrix.com/wp-content/uploads/2016/02/Our-strengths-and-Focuc-abstract-background.jpg');
+padding:50px;
+}
+</style>
 
 
 <div class="container">
@@ -14,27 +20,25 @@
                 <form class="col s12" data-ng-submit="login()" >
                    
                            <div class="input-field col s12">         
-                <input  type="email" data-ng-model="Users.email"  required >
-                            <label for="email">Email</label>
+                <input  type="email" data-ng-model="Users.email" placeholder="EMAIL" required >
+                            <label for="email" ></label>
                              
                          </div>  
                  
                                <div class="input-field col s12">
                   
-                 <input  type="password" data-ng-model="Users.password"   required>
-                            <label for="passs">Password</label>
+                 <input  type="password" data-ng-model="Users.password"   placeholder="PASSWORD" required>
+                            <label for="passs"></label>
                           
                    
                     </div>
 
                    
-                    <div class="input-field col s6">
-                    <a href=""><h5>Forgot password....</h5></a>
-                    </div>
+                   
                     
                     
                        <div class="input-field col s6">
-                            <p class="right-align">
+                            <p class="left-align">
                                 <button class="btn btn-large waves-effect waves-light" type="submit" >Login</button>
                             </p>
                         </div>
@@ -47,4 +51,4 @@
 </div>
 
 </div>
-
+{{Users}}

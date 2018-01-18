@@ -1,4 +1,6 @@
+
 package com.test.rest;
+
 import java.util.ArrayList;
 
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niit.SNAPBackEnd.dao.Blogcommentdaoimpl;
 import com.niit.SNAPBackEnd.dao.Blogdao;
 import com.niit.SNAPBackEnd.dao.Userdao;
 import com.niit.SNAPBackEnd.models.Blog;
@@ -30,7 +33,7 @@ public class BlogController {
 	
 
 	@RequestMapping(value="/getAllBlogs",method=RequestMethod.GET,headers = "Accept=application/json")
-	public ArrayList<Blog> getAllBlogs(){
+	public ResponseEntity<ArrayList<Blog>> getAllBlogs(){
 		
 		System.out.println("in getall blogs");
 		ArrayList<Blog> blogs=(ArrayList<Blog>)blogDAO.getAllBlogs();
@@ -41,20 +44,33 @@ public class BlogController {
 			
 		
 		}
-				return blogs;
 				
+				
+				return new ResponseEntity<ArrayList<Blog>>(blogs,HttpStatus.OK);
+	
+	
+	}
+	
+	
+	
+	@RequestMapping(value="/getAllMyBlogs/{userid}",method=RequestMethod.GET)
+	public ResponseEntity<ArrayList<Blog>> getAllMyBlogs(@PathVariable("userid") int userid){
+		
+		Users user=userDAO.getUser(userid);
+		ArrayList<Blog> myblogs=blogDAO.getAllMyBlogs(user.getEmail());
+		return new ResponseEntity<ArrayList<Blog>>(myblogs,HttpStatus.OK);
 	
 	
 	
 	}
 
-	
+
 	
 	
 	@RequestMapping(value="/addBlog",method=RequestMethod.POST)
 	public ResponseEntity<String> addBlog(@RequestBody Blog blog){
 	
-	
+		System.out.println("in addblog......");
 		
 		
 		boolean isSaved=blogDAO.addBlog(blog);
@@ -107,12 +123,14 @@ public class BlogController {
 	
 	}
 	
-	@RequestMapping(value="/updateBlog/{blogid}",method=RequestMethod.POST)
-	public ResponseEntity<String> updateBlog(@RequestBody Blog blog,@PathVariable("blogid") int blogid){
+	@RequestMapping(value="/updateBlog/{blogid}/{blogname}/{blogcontent}",method=RequestMethod.GET)
+	public ResponseEntity<String> updateBlog(@PathVariable("blogid") int blogid,@PathVariable("blogname") String blogname,@PathVariable("blogcontent") String blogcontent){
+		System.out.println(blogid+"  "+blogname+" "+blogcontent);
+		
 		Blog tempblog=blogDAO.getBlog(blogid);
 		
-		tempblog.setBlogContent(blog.getBlogContent());
-		tempblog.setBlogName(blog.getBlogName());
+		tempblog.setBlogContent(blogcontent);
+		tempblog.setBlogName(blogname);
 		tempblog.setStatus("A");
 		
 		
@@ -184,29 +202,27 @@ public class BlogController {
 	}	
 
 	
-	@RequestMapping(value="/incview/{blogId}",method=RequestMethod.GET)
-	public ResponseEntity<String> incview(@PathVariable("blogId") int blogId){
-		
-		Blog blog=blogDAO.getBlog(blogId);
-		blog.setViews(blog.getViews()+1);
-		boolean isSaved=blogDAO.updateBlog(blog);
-		if(isSaved)
-		return new ResponseEntity<String>("Blog view incremented successfully",HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Problem in view incrementing blog",HttpStatus.BAD_REQUEST);
-		
-	}
 	
-	@RequestMapping(value="/addBlogComments/{blogId}",method=RequestMethod.POST)
-	public ResponseEntity<String> addBlogComments(@RequestBody Blogcomments blogcomment,@PathVariable("blogId") int blogId){
-		
-		blogcomment.setBlogcomid(blogId);
-		boolean isSaved=blogDAO.addBlog(blogcomment);
+	@RequestMapping(value="/addBlogComments/{blogid}/{username}/{blogcomm}",method=RequestMethod.GET)
+	public ResponseEntity<String> addBlogComments(@PathVariable("blogid") int blogid,@PathVariable("username") String username,@PathVariable("blogcomm") String blogcomm){
+		System.out.println(blogid);
+Blogcomments blogcomment=new Blogcomments();
+blogcomment.setBlogid(blogid);
+blogcomment.setBlogcomm(blogcomm);
+blogcomment.setUsername(username);
+
+
+
+
+		boolean isSaved=blogDAO.addBlogComment(blogcomment);
 		if(isSaved)
+		{
 		return new ResponseEntity<String>("Blogcomment added successfully",HttpStatus.OK);
+		}
 		else
+		{
 			return new ResponseEntity<String>("Problem in adding blog comment",HttpStatus.BAD_REQUEST);
-		
+		}
 	}
 	
 	
@@ -242,7 +258,7 @@ public class BlogController {
 	
 	
 	@RequestMapping(value="/getAllBlogComments/{blogId}",method=RequestMethod.GET,headers = "Accept=application/json")
-	public ArrayList<BlogComments> getAllBlogComment(@PathVariable("blogId") int blogId){
+	public ArrayList<Blogcomments> getAllBlogComment(@PathVariable("blogId") int blogId){
 	
 	ArrayList<Blogcomments> blogcomments=blogDAO.getAllBlogComments(blogId);
 	if(blogcomments.isEmpty()){
@@ -261,7 +277,7 @@ public class BlogController {
 	
 	Blogcomments blogComments=blogDAO.getBlogComment(blogcommentId);
 
-	if(blogDAO.getBlogComment(blogComments))
+	if(blogDAO.deleteBlogComment(blogComments))
 	{
 		return new ResponseEntity<String>("BlogComment deleted successfully",HttpStatus.OK);	
 	}

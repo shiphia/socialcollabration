@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.SNAPBackEnd.models.Job;
+import com.niit.SNAPBackEnd.models.JobApplications;
 
 
 
@@ -88,6 +89,53 @@ public class Jobdaoimpl implements Jobdao {
 		return jobList;
 		
 	}
+
+	@Transactional
+	public ArrayList<JobApplications> myjobs(int myid) {
+		Session session = sessionFactory.openSession();
+		ArrayList<JobApplications> jobapllicationlist=(ArrayList<JobApplications>)session.createQuery("from JobApplications where userid="+myid).list();
+		session.close();
+		return jobapllicationlist;
+	}
+	
+	@Transactional
+	public ArrayList<JobApplications> checkIfApplied(int jobid, int myid) {
+		Session session = sessionFactory.openSession();
+		ArrayList<JobApplications> checkifapplied=(ArrayList<JobApplications>)session.createQuery("from JobApplications where userid="+myid+" and jobid="+jobid).list();
+	session.close();
+	return checkifapplied;
+	}
+
+	public ArrayList<JobApplications> jobapps(int jobid) {
+	
+		
+	Session session = sessionFactory.openSession();
+	ArrayList<JobApplications> jobapps=(ArrayList<JobApplications>)session.createQuery("from JobApplications where  jobid="+jobid).list();
+	session.close();
+	return jobapps;
+	
+	
+	}
+
+	@Transactional
+	public boolean applyJob(JobApplications jobapplications){
+		try
+		{
+		sessionFactory.getCurrentSession().save(jobapplications);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		return false;
+		}
+		
+		
+	}
+	
+
+
+
 
 }
 	

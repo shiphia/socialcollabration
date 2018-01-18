@@ -1,0 +1,30 @@
+<div data-ng-controller="blogrequestcontroller">
+
+<div class="card card-1" style="margin-top:25px;margin-right: 25px;margin-left: 25px">
+ <table>
+        <thead>
+          <tr>
+              <th>NAME</th>
+              <th>BLOGNAME</th>
+              
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr  data-ng-repeat="blogreq in blogequests">
+            <td>{{blogreq.username}}</td>
+            <td>{{blogreq.blogname}}</td>
+           
+            <td>  <div class="btn-group"> <a data-ng-click="acceptblogrequests(blogreq.blogid)"  class="btn btn-primary">ACCEPT</a></div> </td>
+          </tr>
+       
+        </tbody>
+      </table>
+ 
+ 
+ 
+ 
+ </div>
+
+</div>

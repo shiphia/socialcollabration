@@ -13,6 +13,7 @@ import com.niit.SNAPBackEnd.dao.Forumdao;
 import com.niit.SNAPBackEnd.models.Blogcomments;
 import com.niit.SNAPBackEnd.models.Forum;
 import com.niit.SNAPBackEnd.models.Forumcomments;
+import com.niit.SNAPBackEnd.models.Forumrequests;
 
 @Repository("forumdao")
 public class Forumdaoimpl implements Forumdao {
@@ -97,40 +98,7 @@ public class Forumdaoimpl implements Forumdao {
 		}
 
 
-		@Transactional
-		public boolean approveForum(Forum forum) {
-			try{
-				forum.setStatus("Y");
-				sessionFactory.getCurrentSession().saveOrUpdate(forum);
-				return true;
-				
-			}
-			catch(Exception e)
-			{
-			
-			return false;
-			}
-		}
 
-		
-		
-		@Transactional
-		public boolean rejectforum(Forum forum) {
-			try{
-				forum.setStatus("N");
-				sessionFactory.getCurrentSession().saveOrUpdate(forum);
-				return true;
-				
-			}
-			catch(Exception e)
-			{
-			
-			return false;
-			}
-		}
-
-		
-		
 		@Transactional
 		public boolean addForumComment(Forumcomments forumcomment) {
 			
@@ -145,6 +113,13 @@ public class Forumdaoimpl implements Forumdao {
 			return false;
 			}
 		}
+
+		
+		
+		
+		
+		
+		
 
 		
 		
@@ -188,22 +163,174 @@ public class Forumdaoimpl implements Forumdao {
 			return forumcomment;
 		}
 
-	@Transactional
-		public ArrayList<Forumcomments> getAllForumComments(int forumid) {
-			Session ssn=sessionFactory.openSession();
-			
-			
-			org.hibernate.Query q= ssn.createQuery("from ForumComments where forumid="+forumid);
-			ArrayList<Forumcomments> l=(ArrayList<Forumcomments>) q.list();
-			
-	        
-	        ssn.close();
+		
+		@Transactional
+		public ArrayList<Forumcomments> getAllForumCommentsById(int forumid) {
+				Session ssn=sessionFactory.openSession();
+				
+				
+				org.hibernate.Query q= ssn.createQuery("from Forumcomments where forumid="+forumid);
+				ArrayList<Forumcomments> l=(ArrayList<Forumcomments>) q.list();
+				
+		        
+		        ssn.close();
 
 
-			
-			return l;
-			
+				
+				return l;
+				
+			}
+		
+		
+		
+		
+		
+		
+		
+		@Transactional
+	public boolean addForumRequest(Forumrequests forumrequest) {
+		try
+		{
+			sessionFactory.getCurrentSession().save(forumrequest);
+		return true;
 		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		return false;
+		}
+	}
+
+	@Transactional
+	public boolean acceptForumRequest(Forumrequests forumrequest) {
+		try
+		{
+		sessionFactory.getCurrentSession().saveOrUpdate(forumrequest);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		return false;
+		}
+	}
+
+	@Transactional
+	public boolean rejectForumRequest(Forumrequests forumrequest) {
+		try
+		{
+		sessionFactory.getCurrentSession().saveOrUpdate(forumrequest);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		return false;
+		}
+	}
+
+	@Transactional
+	public boolean blockUser(Forumrequests forumrequest) {
+		try
+		{
+		sessionFactory.getCurrentSession().saveOrUpdate(forumrequest);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		return false;
+		}	
+	}
+	@Transactional
+	public ArrayList<Forumrequests> getAllForumRequest() {
+		Session session = sessionFactory.openSession();
+		ArrayList<Forumrequests> forumReqList=(ArrayList<Forumrequests>)session.createQuery("from Forumrequests where status='A'").list();
+		session.close();
+		return forumReqList;
+
+	}
+
+	@Transactional
+	public Forumrequests getForumRequest(int ForumReqId) {
+		
+		Session session=sessionFactory.openSession();
+		Forumrequests forumReq = (Forumrequests) session.get(Forumrequests.class, ForumReqId);
+		session.close();
+		return forumReq;
+		
+	}
+
+	@Transactional
+	public ArrayList<Forumrequests> getAllMyForum(int myid) {
+		Session session = sessionFactory.openSession();
+		ArrayList<Forumrequests> myforums=(ArrayList<Forumrequests>)session.createQuery("from Forumrequests where userid="+myid+" and status='YES'").list();
+		session.close();
+		return myforums;
+		
+	}
+
+	@Transactional
+	public ArrayList<Forumrequests> checkIfMyForum(int ForumId, int myid) {
+		
+		Session session = sessionFactory.openSession();
+		ArrayList<Forumrequests> myforums=(ArrayList<Forumrequests>)session.createQuery("from Forumrequests where userid="+myid+" and forumid="+ForumId).list();
+		session.close();
+		return myforums;
+	}
+
+	@Transactional
+	public ArrayList<Forumrequests> forreqbyforid(int forumid) {
+		Session session = sessionFactory.openSession();
+		ArrayList<Forumrequests> forumsbyforid=(ArrayList<Forumrequests>)session.createQuery("from Forumrequests where forumid="+forumid+" and status='YES'").list();
+		session.close();
+		return forumsbyforid;
+		
+	}
+
+	@Transactional
+	public ArrayList<Forumrequests> getAllForumRequestAll(int forumid) {
+		Session session = sessionFactory.openSession();
+		ArrayList<Forumrequests> forumReqList=(ArrayList<Forumrequests>)session.createQuery("from Forumrequests where forumid="+forumid).list();
+		session.close();
+		return forumReqList;
+	}
+
+
+	
+	
+
+	@Transactional
+	public Forumrequests myforreq(String email, int forumid) {
+		Session session = sessionFactory.openSession();
+		Forumrequests forumsreme=(Forumrequests)session.createQuery("from Forumrequests where forumid="+forumid+" and username='"+email+"'").list().get(0);
+		return forumsreme;
+	}
+
+
+	@Transactional
+	public boolean deleteForumRequest(Forumrequests forumreq)
+	{
+		try
+	{
+	sessionFactory.getCurrentSession().delete(forumreq);
+	return true;
+	}
+	catch(Exception e)
+	{
+	System.out.println(e);
+	return false;
+	}
+	}
+
+	
+
+
+	
+	
+
+
+	
 }
 
 

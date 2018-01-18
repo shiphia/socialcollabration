@@ -1,14 +1,11 @@
-
-
-
-app.controller("registercontroller", function ($scope,$location,$http,$rootScope) {
+app.controller("registercontroller", function ($scope,$location,$http,$rootScope,$cookieStore) {
 	 $scope.msg = "Register  page";
 	 $scope.Users={firstname:'',lastname:'',email:'',password:'',role:'ROLE_USER',isonline:'NO'};
 	 $scope.register=function()
 	 {
 		 console.log("in register controller angualar");
 		
-		 $http.post("http://localhost:8080/SayhiMiddleware/user/register",$scope.Users).then(function(response){
+		 $http.post("http://localhost:9080/Rest/user/register",$scope.Users).then(function(response){
 		 
 			 console.log("Registerd Successfully")
 			 $scope.Users=response.data;
@@ -25,13 +22,15 @@ app.controller("registercontroller", function ($scope,$location,$http,$rootScope
 	 $scope.login=function()
 	 {
 		 console.log("in login method");
-		 $http.post("http://localhost:8080/SayhiMiddleware/user/login",$scope.Users).then(function(response)
+		 $http.post("http://localhost:9080/Rest/user/login",$scope.Users).then(function(response)
 				 {
 			
 			 
 			 $scope.Usersdet=response.data;
 			 $rootScope.currentuser=response.data;
 			 console.log("ROLE"+$rootScope.currentuser.role)
+			/* $http.defaults.headers.common['Authorization'] = 'Basic' + $rootScope.currentuser;*/
+					$cookieStore.put('currentUser', $rootScope.currentuser)
 			 $location.path("/blog")
 				 });
 		 
@@ -47,7 +46,7 @@ console.log("in logout controlelr")
 	 {
 	 
 		 console.log( $rootScope.currentuser.email)
-			$http.get("http://localhost:8080/SayhiMiddleware/user/logout/"+ $rootScope.currentuser.email)
+			$http.get("http://localhost:9080/Rest/user/logout/"+ $rootScope.currentuser.email)
 				.then(function(response)
 				{
 					 $rootScope.currentuser=null;
@@ -67,3 +66,17 @@ console.log("in logout controlelr")
 
 	
 });
+
+
+
+	 
+
+
+	
+	 
+	 
+	 
+	 
+
+
+	

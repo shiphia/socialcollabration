@@ -1,5 +1,4 @@
-
-var app = angular.module("SAYHI", ["ngRoute"]);
+var app = angular.module("Snap", ['ngRoute','ngCookies']);
 app.config(function($routeProvider) {
 	
     $routeProvider
@@ -40,7 +39,7 @@ app.config(function($routeProvider) {
     })
   
        .when("/newforum", {
-        templateUrl : "forum/newforum.html",
+        templateUrl : "Forum/newforum.html",
        
        
     })
@@ -53,7 +52,7 @@ app.config(function($routeProvider) {
   
     
      .when("/forumview", {
-        templateUrl : "forum/forumview.html",
+        templateUrl : "Forum/forumview.html",
         controller:"forumcontroller",
         
     })
@@ -68,7 +67,7 @@ app.config(function($routeProvider) {
     
     
      .when("/forumrequests", {
-        templateUrl : "forum/forumrequests.html",
+        templateUrl : "Forum/forumrequests.html",
        
         
     })
@@ -82,7 +81,7 @@ app.config(function($routeProvider) {
     
     
       .when("/forummanage", {
-        templateUrl : "pages/home.html",
+        templateUrl : "Forum/forummanage.html",
         
     })
     .when("/blogmanage", {
@@ -97,16 +96,85 @@ app.config(function($routeProvider) {
     })
     
      .when("/forumforedit", {
-        templateUrl : "forum/updateforum.html",
+        templateUrl : "Forum/updateforum.html",
         
     })
     
-    
+     .when("/chat", {
+        templateUrl : "chat/chat.html",
+        
+    })
+    .when("/jobforedit", {
+        templateUrl : "Job/updatejob.html",
+        
+    })
+     .when("/friendwall", {
+        templateUrl : "Friend/friendpreview.html",
+        
+    })
+    .when("/noti", {
+        templateUrl : "noti/notifications.html",
+  
+    })
     
       .when("/blogview", {
         templateUrl : "Blog/blogview.html",
   
     });
-    
-});
+   });
 
+
+
+   app.run( function ($rootScope, $location, $cookieStore, $http) 
+		{
+	       
+		 $rootScope.$on('$locationChangeStart', function (event, next, current) 
+					 {/*
+						 console.log("$locationChangeStart")
+						    
+						 var userPages = ['/myProfile','myFriends','pendingRequests','sentRequests','/upload','/viewUsers','/addBlogs','/addForum','/viewProfile','/viewBlog','/viewForum','/viewForums'];
+						 var adminPages = ['/admin','/manageUsers','/manageJobs','/manageEvents','/manageForums','/manageBlogs','/addEvents','/addJobs','/jred','/ered','/appliedJobs'];
+						 
+						 var currentPage = $location.path();
+						 
+						 var isUserPage = $.inArray(currentPage, userPages);
+						 var isAdminPage = $.inArray(currentPage, adminPages);
+						 
+						 var isLoggedIn = $rootScope.currentUser.username;
+					        
+					     console.log("isLoggedIn:" +isLoggedIn)
+					     console.log("isUserPage:" +isUserPage)
+					     console.log("isAdminPage:" +isAdminPage)
+					        
+					        if(!isLoggedIn)
+					        	{
+					        	
+					        		if(isUserPage!=-1 || isAdminPage!=-1)  
+					        	 	{
+						        	  console.log("Navigating to login page:")
+						        	  alert("You need to Login first!")
+						        	  $location.path('/login');
+						         	}
+					        	}
+					        
+							 else //logged in
+					        	{
+					        	
+								 var role = $rootScope.currentUser.role;
+								 if(isAdminPage!=-1 && role!='ADMIN' )
+									 {
+									  alert("You cannot view this page as a " + role )
+									  $location.path('/');
+									 }
+					        	}
+					 */});
+					 
+					 // to keep the user logged in after page refresh
+				    $rootScope.currentuser = $cookieStore.get('currentUser') || {};
+				   /* if ($rootScope.currentuser)
+				    {
+				        $http.defaults.headers.common['Authorization'] = 'Basic' + $rootScope.currentuser; 
+				    }*/
+		
+				});
+       

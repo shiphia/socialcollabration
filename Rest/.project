@@ -3,6 +3,9 @@
 	<name>Rest</name>
 	<comment></comment>
 	<projects>
+		<project>Servers</project>
+		<project>SNAPBackEnd</project>
+		<project>SNAPFrnt</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

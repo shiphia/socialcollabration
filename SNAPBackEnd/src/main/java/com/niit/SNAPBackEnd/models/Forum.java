@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,21 +27,15 @@ public class Forum implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
- 
+	@GeneratedValue 
+    @Column(name = "ForumID", nullable = false)
 	private int forumid;
 	@Column(name = "Formname", nullable = false)
     private String formname;
 	@Column(name = "FormContent", nullable = false)
     private String formcontent;
 
-	@Column(name = "Status", nullable = false)
-    private String status;
 	
-	@OneToMany(targetEntity=Forumcomments.class,mappedBy="forumm",cascade = CascadeType.DETACH,fetch=FetchType.EAGER)
-    private Set<Forumcomments> forumcomments ;
-	@Column(name = "Username", nullable = false)
-    private String username;
-
 	 
 	 
 	public int getForumid() {
@@ -55,14 +50,7 @@ public class Forum implements Serializable {
 		return formname;
 	}
 
-	public Set<Forumcomments> getForumcomments() {
-		return forumcomments;
-	}
-
-	public void setForumcomments(Set<Forumcomments> forumcomments) {
-		this.forumcomments = forumcomments;
-	}
-
+	
 
 
 	public void setFormname(String formname) {
@@ -76,14 +64,6 @@ public class Forum implements Serializable {
 		this.formcontent = formcontent;
 	}
 
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
 	
 	

@@ -1,29 +1,36 @@
-
 <style>
+body{
+background:url('https://alttrix.com/wp-content/uploads/2016/02/Our-strengths-and-Focuc-abstract-background.jpg');
+padding:50px;
+} 
 .photo-profile{
-    border:1px solid #DDD;    
+    border:1px solid #DDD; 
+      
+
 }
 </style>
-
- <div class="row">
-      
-      <div class="col s8">
+<div class="row">
+  <div class="col s8">
+ <ul class="nav nav-tabs">
+    <li class="active">
+        <a data-target="#tab-one" data-toggle="tab">Blogs</a>
+    </li>
+    <li>
+        <a data-target="#tab-two" data-toggle="tab">Forums</a>
+    </li>
+     <li>
+        <a data-target="#tab-three" data-toggle="tab">Jobs</a>
+    </li>
     
-    <div class="col s12" style="margin-left: 5%;margin-right: 5%" >
-      <ul class="tabs">
-        <li class="tab col s4"><a href="#test1">BLOGS</a></li>
-        <li class="tab col s4"><a href="#test2">FORUMS</a></li>
-        <li class="tab col s4 "><a href="#test3">JOBS</a></li>
-        
-      </ul>
-    </div>
-    <div id="test1" class="col s12" style="margin-left: 5%;margin-right: 5%">
-  
+</ul>
 
+<div class="tab-content">
+    <div id="tab-one" class="tab-pane active">
+       
 <div data-ng-controller="blogcontroller">
 <br>
 
-<a href="#!/newblog"><button   style="width:95%">Writeblog</button></a>
+<a href="#!/newblog"><img data-ng-src="http://localhost:9080/SNAPFrnt/resources/images/writeblog.jpg" style="width:50px;height:50px "><h3 style="color:white">Writeblog</h3></a>
   
   
   
@@ -33,32 +40,30 @@
 
            
                     
-                            <div class="media">
+                           <div class="media">
                               <div class="media-left">
                                 <a href="#">
-                                  <img class="media-object photo-profile" src="http://0.gravatar.com/avatar/38d618563e55e6082adf4c8f8c13f3e4?s=40&d=mm&r=g" width="40" height="40" alt="...">
-                                </a>
+                                
                               </div>
                               <div class="media-body">
-                                <a href="#" class="anchor-username"><h4 class="media-heading">{{blogg.username}}</h4></a> 
+                                 <a href="" data-ng-controller="friendcontroller" data-ng-click="friendpreview(blogg.userid)" class="anchor-username"><h4 class="media-heading">{{blogg.username}}</h4></a> 
                               
                               </div>
                             </div>
-             
             
-                   <h3><b>{{blogg.blogname}}</b></h3>
+                   <h3><b>{{blogg.blogName}}</b></h3>
                   
                  
               
                  <div class="media">
                   <div class="media-body">
-                  <h4>{{ blogg.blogcontent | limitTo: 80 }}</h4>
+                  <h4>{{ blogg.blogContent | limitTo: 80 }}</h4>
                   
                   </div>
                    <div class="media-right">
             
                  
-                   <div class="btn-group"> <a  data-ng-click="maximum(blogg.blogid)" class="btn btn-primary">{{blogg.blogcontent.length > 60 ? 'READ FULL' : ''}}</a> </div>
+                   <div class="btn-group"> <a  data-ng-click="maximum(blogg.blogid)" class="btn btn-primary">VIEW{{blogg.blogcontent.length > 60 ? 'READ FULL' : ''}}</a> </div>
            
            
 </div>
@@ -68,7 +73,7 @@
 
 <div class="col-s3">{{blogg.likes}}   Likes</div>
 
-<div class="col-s3">{{blogg.views}}  Views </div>
+
 </div>
 </div>
 </div>
@@ -76,11 +81,9 @@
 </div>
 
 
-
-  </div>
-    <div id="test2" class="col s12" style="margin-left: 5%;margin-right: 5%">
-    
-    <div data-ng-controller="forumcontroller">
+    </div>
+    <div id="tab-two" class="tab-pane">
+       <div data-ng-controller="forumcontroller">
     
     
     
@@ -121,7 +124,7 @@
                    <div class="media-right">
             
                  
-                   <div class="btn-group"> <a  data-ng-click="fetchforumbyid(forum.forumid)" class="btn btn-primary">{{forum.forumcontent.length > 60 ? 'READ FULL' : ''}}</a> </div>
+                   <div class="btn-group"> <a  data-ng-click="fetchforumbyid(forum.forumid)" class="btn btn-primary">view  full{{forum.forumcontent.length > 60 ? 'READ FULL' : ''}}</a> </div>
                    
              
 </div>
@@ -129,23 +132,15 @@
 
 </div>
 </div>
-
-
-
-
-
-    
-    
-    
     </div>
     </div>
-    <div id="test3" class="col s12" style="margin-left: 5%;margin-right: 5%">
-    <div data-ng-controller="jobcontroller">
+      <div id="tab-three" class="tab-pane">
+         <div data-ng-controller="jobcontroller">
     
     	<div data-ng-repeat="jobb in jobsdata">
     	<div class="card card-1" style="margin-top:5vh;padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px">
     	
-    	 <h3><b>{{jobb.company}}</b></h3>
+    	 <h3><b>{{jobb.jobdesc}}</b></h3>
     	 <h3>Post for {{jobb.jobprofile}}</h3>
     	
     	                  <div class="media">
@@ -163,39 +158,35 @@
     
     
     </div>
-    
     </div>
-      
-      
-      </div>
-      <div class="col s4">
-      
-<table >
-<tr >
-<td>
-<div class="panel panel-default"  style="height:30vh">
-  <div class="panel-body">EVENTS</div>
 </div>
-</td>
-</tr>
-<tr >
-<td>
+</div>
 
+  
+ <div class="col s4">
+      
 
+<div class="panel panel-default"  style="height:40vh">
+  <div class="panel-body">
+  <div data-ng-controller="registercontroller">
+  
+ <h2>{{currentuser.firstname}}   {{currentuser.lastname}}</h2>
+                            <h2>{{currentuser.email}}</h2>
+  </div>
+  </div>
+</div>
 
+<img src="http://localhost:9080/SNAPFrnt/resources/images/chatt.jpg" style="width:50px;height:50px">
+<a href="#!/chat"><button>ONLINE CHAT</button></a>
 
+<a href="#!/noti"><button>NOTIFICATIONS</button></a>
 
-
-
-</td>
-</tr>
-<tr >
-<td>
 
 
 <div class="panel panel-default"  style="height:30vh">
   <div class="panel-body">ONLINE FRIENDS<br>
   <div data-ng-controller="friendcontroller">
+
    <ul>
    <li data-ng-repeat="online in onlineusers">{{online.firstname}}  {{online.lastname}}</li>
    
@@ -216,16 +207,10 @@
 </div>
 
 
-</td>
-</tr>
 
-</table>
-
-      
-    </div>
+      </div>
 </div>
-
-
+      
 
 
 
@@ -247,3 +232,5 @@ $(document).ready(function(){
   });
               
 </script>
+
+	

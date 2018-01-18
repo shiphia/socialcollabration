@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Component	
-@Table(name="Blogcomments")
+@Table(name="BLOGCOMMENTS")
 public class Blogcomments implements Serializable  {
 
 	/**
@@ -30,17 +30,27 @@ public class Blogcomments implements Serializable  {
 	
 	@Column(name = "BlogComm", nullable = false)
     private String blogcomm;
-	@ManyToOne
-    @JoinColumn(name="B_id",updatable=true,insertable=true,nullable=false)
-    private Blog blogg;
+	@Column(name = "Blogid", nullable = false)
+	private int blogid;
+	
+	@Column(name = "Username", nullable = false)
+	private String username;
 	
 	
-	public Blog getBlogg() {
-		return blogg;
+	
+	public int getBlogid() {
+		return blogid;
 	}
-	public void setBlogg(Blog blogg) {
-		this.blogg = blogg;
+	public void setBlogid(int blogid) {
+		this.blogid = blogid;
 	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	public int getBlogcomid() {
 		return blogcomid;
 	}
